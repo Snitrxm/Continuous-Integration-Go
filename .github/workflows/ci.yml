@@ -1,16 +1,21 @@
 name: ci-golang-workflow
 on: 
-  pull_request:
+  pull_request:  ## needs to wait the check-application workflow pass to merge in develop
     branches:
       - develop
 
 jobs:
   check-application:
     runs-on: ubuntu-latest
+
+    strategy:
+      matrix:           
+        go: ['1.14', '1.15'] ## run in different version 
+
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-go@v2
         with:
-          go-version: 1.15
+          go-version: ${{ matrix.go }}
       - run: go test
       - run: go run math.go    

@@ -4,13 +4,14 @@ on:
     branches:
       - develop
 
-strategy:
-  matrix:           
-    go: ['1.14', '1.15'] ## run in different version 
-
 jobs:
   check-application:
     runs-on: ubuntu-latest
+
+    strategy:
+      matrix:           
+        go: ['1.14', '1.15'] ## run in different version 
+
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-go@v2
